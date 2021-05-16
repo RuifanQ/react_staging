@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.bind2 = function (context) {
+            var self = this;
+            //获取bind函数从第二个参数到最后一个参数
+            var args = Array.prototype.slice.call(arguments, 1);
+
+            var fNOP = function () { };
+
+            var fBound = function () {
+                //这个时候的arguments是指bind返回的函数传入的参数
+                var bindArgs = Array.prototype.slice.call(arguments);
+                return self.apply(this instanceof fBound ? this : context, args.concat(bindArgs));
+            }
+
+            fNOP.prototype = this.prototype;
+            fBound.prototype = new fNOP();
+            return fBound;
+        }
+
+
+    </script>
+</body>
+
+</html>
